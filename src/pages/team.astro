@@ -1,0 +1,71 @@
+---
+import SectionHeading from '../components/SectionHeading.astro';
+import Base from '../layouts/Base.astro';
+import { supervisor, team } from '../data/site';
+---
+
+<Base title="Team">
+  <section class="title">
+    <h1>Team</h1>
+    <p>Five students, one supervisor, three interchangeable layers.</p>
+  </section>
+
+  <section>
+    <SectionHeading title="Supervisor" />
+    <ul class="list">
+      <li class="row">
+        <span class="name">{supervisor.name}</span>
+        <span class="muted">{supervisor.affiliation}</span>
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <SectionHeading title="Members" />
+    <ul class="list">
+      {
+        team.map((p) => (
+          <li class="row member">
+            <span class="stack">
+              <span class="name">{p.name}</span>
+              {p.github && (
+                <a class="mono muted handle" href={`https://github.com/${p.github}`}>
+                  @{p.github}
+                </a>
+              )}
+            </span>
+            <span class="stack">
+              <span>{p.role}</span>
+              <span class="muted area">{p.area}</span>
+            </span>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</Base>
+
+<style>
+  .member {
+    padding: 16px 0;
+  }
+
+  .stack {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .name {
+    font-weight: 500;
+  }
+
+  .handle {
+    font-size: 12px;
+  }
+
+  .area {
+    font-size: 15px;
+    line-height: 1.55;
+  }
+</style>

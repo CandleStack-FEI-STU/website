@@ -1,0 +1,146 @@
+---
+import { render } from 'astro:content';
+import SectionHeading from '../../components/SectionHeading.astro';
+import Base from '../../layouts/Base.astro';
+import { formatDate } from '../../lib/format';
+import { getMeetings } from '../../lib/meetings';
+import { url } from '../../lib/url';
+
+export async function getStaticPaths() {
+  const meetings = await getMeetings();
+  return meetings.map((meeting) => ({ params: { slug: meeting.id }, props: { meeting } }));
+}
+
+const { meeting } = Astro.props;
+const m = meeting.data;
+const { Content } = await render(meeting);
+const hasNotes = Boolean(meeting.body?.trim());
+
+const details = [
+  ['Date', m.time ? `${formatDate(m.date)}, ${m.time}` : formatDate(m.date)],
+  ['Place', m.place],
+  ['Present', m.present.join(', ')],
+  ['Absent', m.absent.length ? m.absent.join(', ') : '—'],
+  ['Minutes by', m.minutesBy],
+];
+---
+
+<Base title={`Week ${m.week}: ${m.title}`} description={m.summary}>
+  <a href={url('/meetings/')} class="mono muted back">← All meetings</a>
+
+  <section class="title">
+    <h1>Week {m.week} · {m.title}</h1>
+  </section>
+
+  <section>
+    <SectionHeading title="Details" />
+    <ul class="list">
+      {
+        details.map(([label, value]) => (
+          <li class="row">
+            <span class="muted">{label}</span>
+            <span>{value}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section>
+    <SectionHeading title="Agenda" />
+    <ol class="list">
+      {
+        m.agenda.map((item, i) => (
+          <li class="row">
+            <span class="mono muted">{i + 1}</span>
+            <span>{item}</span>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  {
+    m.decisions.length > 0 && (
+      <section>
+        <SectionHeading title="Decisions" />
+        <ul class="list">
+          {m.decisions.map((item, i) => (
+            <li class="row">
+              <span class="mono state-done">D{i + 1}</span>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+
+  {
+    m.actions.length > 0 && (
+      <section>
+        <SectionHeading title="Action items" />
+        <ul class="list">
+          {m.actions.map((a) => (
+            <li class="row action">
+              <span>{a.task}</span>
+              <span class="muted">{a.owner}</span>
+              <span class="mono state-active">{a.due ? formatDate(a.due).slice(0, 5) : '—'}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+
+  {
+    hasNotes && (
+      <section>
+        <SectionHeading title="Notes" />
+        <div class="notes">
+          <Content />
+        </div>
+      </section>
+    )
+  }
+
+  {
+    m.next && (
+      <section>
+        <SectionHeading title="Next meeting" />
+        <p class="next">{m.next}</p>
+      </section>
+    )
+  }
+</Base>
+
+<style>
+  .back {
+    font-size: 12px;
+    margin-bottom: -28px;
+  }
+
+  .action {
+    grid-template-columns: minmax(0, 1fr) 150px 60px;
+  }
+
+  .notes {
+    border-top: 1px solid var(--rule);
+    padding-top: 10px;
+    line-height: 1.6;
+  }
+
+  .notes :global(p) {
+    margin: 0 0 12px;
+  }
+
+  .next {
+    margin: 0;
+  }
+
+  @media (max-width: 560px) {
+    .action {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

@@ -1,0 +1,101 @@
+---
+import SectionHeading from '../components/SectionHeading.astro';
+import Base from '../layouts/Base.astro';
+import { status } from '../data/site';
+
+const current = status.phases.find((p) => p.state === 'active');
+const lists = [
+  { title: 'Done', items: status.done, cls: 'state-done' },
+  { title: 'In progress', items: status.inProgress, cls: 'state-active' },
+  { title: 'Planned', items: status.planned, cls: 'state-planned' },
+];
+---
+
+<Base title="Status">
+  <section class="title">
+    <h1>Status</h1>
+    <p>{current && `Current phase: ${current.name}. `}Last updated {status.updated}.</p>
+  </section>
+
+  <section>
+    <SectionHeading title="Phases" />
+    <ol class="list">
+      {
+        status.phases.map((p) => (
+          <li class:list={['phase', p.state]}>
+            <span class="dot" />
+            <span class="mono name">{p.name}</span>
+            <span class="desc">{p.description}</span>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  {
+    lists.map((list) => (
+      <section>
+        <SectionHeading title={list.title} />
+        <ul class="list">
+          {list.items.map((item) => (
+            <li class="item">
+              <span class={list.cls}>—</span>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))
+  }
+</Base>
+
+<style>
+  .phase {
+    display: grid;
+    grid-template-columns: 24px 126px minmax(0, 1fr);
+    gap: 16px;
+    align-items: center;
+    padding: 12px 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 2px solid var(--muted);
+  }
+
+  .done .dot {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .active .dot {
+    background: var(--warn);
+    border-color: var(--warn);
+  }
+
+  .planned .name,
+  .planned .desc {
+    color: var(--muted);
+  }
+
+  .item {
+    display: grid;
+    grid-template-columns: 24px minmax(0, 1fr);
+    gap: 16px;
+    padding: 10px 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  @media (max-width: 560px) {
+    .phase {
+      grid-template-columns: 24px minmax(0, 1fr);
+    }
+
+    .desc {
+      grid-column: 2;
+    }
+  }
+</style>

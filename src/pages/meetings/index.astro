@@ -1,0 +1,90 @@
+---
+import SectionHeading from '../../components/SectionHeading.astro';
+import Base from '../../layouts/Base.astro';
+import { team } from '../../data/site';
+import { formatDate } from '../../lib/format';
+import { getMeetings } from '../../lib/meetings';
+import { url } from '../../lib/url';
+
+const meetings = await getMeetings();
+---
+
+<Base title="Meetings">
+  <section class="title">
+    <h1>Meetings</h1>
+    <p>Minutes of weekly team meetings: attendance, decisions and action items.</p>
+  </section>
+
+  <section>
+    <SectionHeading title="Newest first" />
+    <ul class="list">
+      {
+        meetings.map((m) => (
+          <li>
+            <a class="row entry" href={url(`/meetings/${m.id}/`)}>
+              <span class="mono muted when">
+                <span>{formatDate(m.data.date)}</span>
+                <span>Week {m.data.week}</span>
+              </span>
+              <span class="body">
+                <span class="name">
+                  {m.data.title}
+                  {m.data.draft && <span class="mono draft">draft</span>}
+                </span>
+                <span class="muted summary">{m.data.summary}</span>
+                <span class="mono muted stats">
+                  {m.data.present.length}/{team.length} present · {m.data.decisions.length} decisions ·{' '}
+                  {m.data.actions.length} action items
+                </span>
+              </span>
+            </a>
+          </li>
+        ))
+      }
+      {
+        meetings.length === 0 && (
+          <li class="row">
+            <span class="muted">No meetings yet</span>
+          </li>
+        )
+      }
+    </ul>
+  </section>
+</Base>
+
+<style>
+  .entry {
+    padding: 18px 0;
+  }
+
+  .when,
+  .body {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .body {
+    gap: 6px;
+  }
+
+  .name {
+    font-size: 18px;
+    font-weight: 500;
+  }
+
+  .summary {
+    font-size: 15px;
+    line-height: 1.55;
+  }
+
+  .stats {
+    font-size: 12px;
+  }
+
+  .draft {
+    margin-left: 8px;
+    font-size: 11px;
+    color: var(--warn);
+  }
+</style>

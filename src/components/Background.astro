@@ -1,0 +1,91 @@
+---
+import { bottom, left, right } from '../lib/decor';
+---
+
+<div class="decor" aria-hidden="true">
+  <svg class="left" viewBox="0 0 300 1000" set:html={left} />
+  <svg class="right" viewBox="0 0 290 900" set:html={right} />
+  <svg class="bottom" viewBox="0 0 1280 160" preserveAspectRatio="xMidYMax slice" set:html={bottom} />
+</div>
+
+<style>
+  .decor {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  /* Fade the decoration behind the content column */
+  .decor::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      transparent calc(50% - 470px),
+      color-mix(in srgb, var(--bg) 90%, transparent) calc(50% - 330px),
+      color-mix(in srgb, var(--bg) 90%, transparent) calc(50% + 330px),
+      transparent calc(50% + 470px)
+    );
+  }
+
+  svg {
+    position: absolute;
+    opacity: 0.85;
+  }
+
+  /* Side columns shrink on short screens so they never run into the bottom band */
+  .left {
+    top: 0;
+    left: 0;
+    width: min(300px, (100vh - 150px) * 0.3);
+    height: auto;
+  }
+
+  .right {
+    top: 0;
+    right: 0;
+    width: min(290px, (100vh - 150px) * 0.3222);
+    height: auto;
+  }
+
+  .bottom {
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 160px;
+  }
+
+  .decor :global(.s),
+  .decor :global(.s-decor) {
+    stroke: var(--decor);
+  }
+  .decor :global(.s-up) {
+    stroke: var(--up);
+  }
+  .decor :global(.s-down) {
+    stroke: var(--down);
+  }
+  .decor :global(.f),
+  .decor :global(.f-decor) {
+    fill: var(--decor);
+  }
+  .decor :global(.f-up) {
+    fill: var(--up);
+  }
+  .decor :global(.f-down) {
+    fill: var(--down);
+  }
+  .decor :global(.f-bg) {
+    fill: var(--bg);
+  }
+
+  @media (max-width: 1100px) {
+    .left,
+    .right {
+      display: none;
+    }
+  }
+</style>

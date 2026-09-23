@@ -1,0 +1,74 @@
+---
+import SectionHeading from '../components/SectionHeading.astro';
+import Base from '../layouts/Base.astro';
+import { project, status, team } from '../data/site';
+import { formatDate } from '../lib/format';
+import { getMeetings } from '../lib/meetings';
+import { url } from '../lib/url';
+
+const meetings = (await getMeetings()).slice(0, 3);
+const summary = [
+  ...status.done.slice(-2).map((text) => ({ label: 'Done', cls: 'state-done', text })),
+  ...status.inProgress.slice(0, 1).map((text) => ({ label: 'In progress', cls: 'state-active', text })),
+  ...status.planned.slice(0, 1).map((text) => ({ label: 'Planned', cls: 'state-planned', text })),
+];
+---
+
+<Base>
+  <section class="title">
+    <h1>{project.title}</h1>
+    <p>{project.tagline}</p>
+    <span class="mono muted meta">{project.meta}</span>
+  </section>
+
+  <section>
+    <SectionHeading title={`Status · ${status.updated}`} link={{ label: 'Full status', href: url('/status/') }} />
+    <ul class="list">
+      {
+        summary.map((item) => (
+          <li class="row">
+            <span class:list={['mono', item.cls]}>{item.label}</span>
+            <span>{item.text}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section>
+    <SectionHeading title="Meetings" link={{ label: 'All meetings', href: url('/meetings/') }} />
+    <ul class="list">
+      {
+        meetings.map((m) => (
+          <li>
+            <a class="row" href={url(`/meetings/${m.id}/`)}>
+              <span class="mono muted">{formatDate(m.data.date)}</span>
+              <span>{m.data.title}</span>
+            </a>
+          </li>
+        ))
+      }
+      {meetings.length === 0 && <li class="row"><span class="muted">No meetings yet</span></li>}
+    </ul>
+  </section>
+
+  <section>
+    <SectionHeading title="Team" link={{ label: 'Team', href: url('/team/') }} />
+    <ul class="list">
+      {
+        team.map((p) => (
+          <li class="row">
+            <span>{p.name}</span>
+            <span class="muted">{p.role}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</Base>
+
+<style>
+  .meta {
+    font-size: 12px;
+  }
+</style>
