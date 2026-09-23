@@ -13,6 +13,8 @@ Static project website for CandleStack (STU FEI team project), built with Astro 
 - Colors only through the CSS variables in `src/styles/global.css`; every change must work in both themes.
 - Keep the design minimal: one 640px column, no new sections or decorations without being asked.
 - Everything in English.
+- No AI attribution anywhere: no `Co-Authored-By` AI trailers or session links in commits,
+  no "Generated with ..." lines in pull requests, no AI mentions in code or content.
 
 ## Verify
 
