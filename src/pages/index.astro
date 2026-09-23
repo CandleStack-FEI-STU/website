@@ -1,4 +1,5 @@
 ---
+import HeroBand from '../components/HeroBand.astro';
 import SectionHeading from '../components/SectionHeading.astro';
 import Base from '../layouts/Base.astro';
 import { getSite, getStatus, getTeam } from '../lib/content';
@@ -16,6 +17,8 @@ const summary = [
 ---
 
 <Base>
+  <HeroBand />
+
   <section class="title">
     <h1>{project.title}</h1>
     <p>{project.tagline}</p>

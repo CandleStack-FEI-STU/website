@@ -1,0 +1,45 @@
+---
+import { heroBand } from '../lib/decor';
+---
+
+<div class="hero-band" aria-hidden="true">
+  <svg viewBox="0 0 358 118" set:html={heroBand} />
+</div>
+
+<style>
+  /* Shown on phones and tablets only, where the side decoration has no room */
+  .hero-band {
+    display: none;
+  }
+
+  @media (max-width: 1100px) {
+    .hero-band {
+      display: block;
+      width: 100%;
+      max-width: 358px;
+      margin: -16px 0 -24px;
+    }
+
+    svg {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .hero-band :global(.s) {
+      stroke: var(--decor);
+    }
+    .hero-band :global(.s-up) {
+      stroke: var(--up);
+    }
+    .hero-band :global(.f) {
+      fill: var(--decor);
+    }
+    .hero-band :global(.f-up) {
+      fill: var(--up);
+    }
+    .hero-band :global(.f-bg) {
+      fill: var(--bg);
+    }
+  }
+</style>
