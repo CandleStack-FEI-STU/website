@@ -1,4 +1,4 @@
-# Candlestack website
+# CandleStack website
 
 Project website with status, meeting minutes and team. Built with [Astro](https://astro.build).
 

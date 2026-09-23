@@ -21,7 +21,7 @@ const details = [
   ['Place', m.place],
   ['Present', m.present.join(', ')],
   ['Absent', m.absent.length ? m.absent.join(', ') : '—'],
-  ['Minutes by', m.minutesBy],
+  ...(m.notesBy ? [['Notes by', m.notesBy]] : []),
 ];
 ---
 

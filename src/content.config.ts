@@ -14,7 +14,7 @@ const meetings = defineCollection({
     place: z.string(),
     present: z.array(z.string()),
     absent: z.array(z.string()).default([]),
-    minutesBy: z.string(),
+    notesBy: z.string().optional(),
     agenda: z.array(z.string()),
     decisions: z.array(z.string()).default([]),
     actions: z

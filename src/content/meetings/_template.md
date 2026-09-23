@@ -9,7 +9,7 @@ summary: One or two sentences with the main decisions. Shown in the list of meet
 place: Online
 present: [Name Surname, Name Surname]
 absent: []
-minutesBy: Name Surname
+notesBy: Name Surname # who wrote these minutes, optional
 agenda:
   - First agenda item
   - Second agenda item

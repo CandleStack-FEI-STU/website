@@ -1,11 +1,11 @@
 // Everything on the site that is not a meeting lives here. Edit and commit.
 
 export const project = {
-  name: 'Candlestack',
+  name: 'CandleStack',
   title: 'Configurable pipeline for pattern analysis in financial time series',
   tagline: 'Data → model → decision. Compare every combination on the same metrics.',
-  meta: 'STU FEI · 2026/27 · Supervisor Filip Hodoň',
-  github: 'https://github.com/CandleStack-FEI-STU/candlestack',
+  meta: 'STU FEI · 2026/2027 · Supervisor Filip Hodoň',
+  github: 'https://github.com/CandleStack-FEI-STU',
 };
 
 export type PhaseState = 'done' | 'active' | 'planned';
@@ -24,12 +24,12 @@ export const status = {
   planned: ['End-to-end skeleton', 'First working version', 'CI: lint and tests on every pull request', 'Deployment server'],
 };
 
-export const supervisor = { name: 'Filip Hodoň', affiliation: 'FEI STU' };
+export const supervisor = { name: 'Filip Hodoň', affiliation: 'Faculty of Electrical Engineering and Information Technology, Slovak University of Technology in Bratislava' };
 
-export const team: { name: string; role: string; area: string; github?: string }[] = [
-  { name: 'Arsen Labovich', role: 'Tech Lead, Backend', area: 'API, experiment storage, pipeline orchestration, code review', github: 'ArsenLabovich' },
-  { name: '[Name]', role: 'Frontend', area: 'Experiment builder, results dashboard, comparison view' },
-  { name: '[Name]', role: 'ML Engineer', area: '.keras loading and validation, inference, architecture comparison' },
-  { name: '[Name]', role: 'Data Engineer', area: 'Data sources, Renko, Kagi, windows, normalization' },
-  { name: '[Name]', role: 'Quant Developer', area: 'Signals, backtest, risk limits, trading metrics' },
+export const team: { name: string; role: string; area?: string; github?: string }[] = [
+  { name: 'Arsen Labovich', role: 'To be assigned', github: 'ArsenLabovich' },
+  { name: 'Mykhailo Adamenko', role: 'To be assigned' },
+  { name: 'Vladyslav Shudiehov', role: 'To be assigned' },
+  { name: 'Bohdan Lynnyk', role: 'To be assigned' },
+  { name: 'Tymur Tkach', role: 'To be assigned' },
 ];
