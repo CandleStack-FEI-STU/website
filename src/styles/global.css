@@ -1,6 +1,3 @@
-@import '@fontsource-variable/geist';
-@import '@fontsource-variable/geist-mono';
-
 :root {
   --bg: #fafaf9;
   --ink: #141414;
@@ -12,8 +9,6 @@
   --down: #b42318;
   --decor: #1c1917;
   --grid: rgb(28 25 23 / 0.045);
-  --font-sans: 'Geist Variable', system-ui, sans-serif;
-  --font-mono: 'Geist Mono Variable', ui-monospace, monospace;
   color-scheme: light;
 }
 

@@ -12,6 +12,8 @@ Static project website for CandleStack (STU FEI team project), built with Astro 
 - Internal links go through `url()` from `src/lib/url.ts` so the site works under a base path.
 - Colors only through the CSS variables in `src/styles/global.css`; every change must work in both themes.
 - Keep the design minimal: one 640px column, no new sections or decorations without being asked.
+- Fonts go through the Astro Fonts API in `astro.config.mjs` (preload + metric-matched fallbacks), not CSS imports.
+- Lighthouse mobile must stay at 100 in every category with CLS 0; check `npm run build && npx astro preview`.
 - Everything in English.
 - No AI attribution anywhere: no `Co-Authored-By` AI trailers or session links in commits,
   no "Generated with ..." lines in pull requests, no AI mentions in code or content.
