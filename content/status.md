@@ -13,6 +13,9 @@ phases:
 
 done:
   - GitHub organization
+  - Website repository
+  - Automatic deployment to GitHub Pages
+  - Domain candlestack.tech
 
 inProgress:
   - Assigning team roles
