@@ -74,7 +74,7 @@ function lineChart(x0: number, y0: number, w: number, n: number, amp: number, op
   );
 }
 
-function neural(x0: number, y0: number, layers: number[], dx: number, dy: number, op: number) {
+function neural(x0: number, y0: number, layers: number[], dx: number, dy: number, op: number, r = 5) {
   const pos = layers.map((cnt, li) =>
     Array.from({ length: cnt }, (_, j) => [x0 + li * dx, y0 + (j - (cnt - 1) / 2) * dy] as const),
   );
@@ -88,23 +88,29 @@ function neural(x0: number, y0: number, layers: number[], dx: number, dy: number
   }
   for (const layer of pos) {
     for (const [x, y] of layer) {
-      out.push(`<circle class="s f-bg" cx="${x}" cy="${f(y)}" r="5" stroke-opacity="${op * 1.4}" stroke-width="1.2"/>`);
+      out.push(`<circle class="s f-bg" cx="${x}" cy="${f(y)}" r="${r}" stroke-opacity="${op * 1.4}" stroke-width="1.2"/>`);
     }
   }
   return out.join('');
 }
 
-function pipeline(x0: number, y0: number, labels: string[], op: number) {
-  const bw = 112;
-  const bh = 30;
-  const gap = 26;
+function pipeline(
+  x0: number,
+  y0: number,
+  labels: string[],
+  op: number,
+  { bw = 112, bh = 30, gap = 26, horizontal = false, size = 11 } = {},
+) {
   return labels
     .map((label, i) => {
-      const y = y0 + i * (bh + gap);
-      let s = `<rect class="s f-bg" x="${x0}" y="${y}" width="${bw}" height="${bh}" rx="6" stroke-opacity="${op}"/>`;
-      s += `<text class="f" x="${x0 + 12}" y="${y + 19}" fill-opacity="${op * 1.3}" font-size="11" font-family="var(--font-mono)">${label}</text>`;
+      const x = horizontal ? x0 + i * (bw + gap) : x0;
+      const y = horizontal ? y0 : y0 + i * (bh + gap);
+      let s = `<rect class="s f-bg" x="${x}" y="${y}" width="${bw}" height="${bh}" rx="6" stroke-opacity="${op}"/>`;
+      s += `<text class="f" x="${x + 12}" y="${y + bh / 2 + 4}" fill-opacity="${op * 1.3}" font-size="${size}" font-family="var(--font-mono)">${label}</text>`;
       if (i < labels.length - 1) {
-        s += `<path class="s" d="M${x0 + bw / 2} ${y + bh} v${gap - 6} m-4 -5 l4 5 l4 -5" fill="none" stroke-opacity="${op}"/>`;
+        s += horizontal
+          ? `<path class="s" d="M${x + bw} ${y + bh / 2} h${gap - 5} m-4 -3 l4 3 l-4 3" fill="none" stroke-opacity="${op}"/>`
+          : `<path class="s" d="M${x + bw / 2} ${y + bh} v${gap - 6} m-4 -5 l4 5 l4 -5" fill="none" stroke-opacity="${op}"/>`;
       }
       return s;
     })
@@ -162,3 +168,22 @@ export const right =
 
 // Bottom band: 1280 x 160
 export const bottom = candles(0, 60, 1280, 72, 6, 0.22) + volume(0, 150, 72, 1280, 0.14);
+
+// Phone layout (below 1100px), drawn for a 390 x 844 screen. It sits behind the text, so it is
+// blurred inside the SVG and dimmed in Background.astro. Generated after the desktop parts so
+// the desktop output stays the same.
+export const mobile =
+  '<defs><filter id="soften" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="1.2"/></filter></defs>' +
+  '<g filter="url(#soften)">' +
+  neural(300, 44, [3, 4, 3], 26, 20, 0.5, 3.5) +
+  neural(250, 330, [3, 4, 4, 2], 34, 26, 0.4) +
+  clusters([[34, 330, 'up'], [86, 400, 'decor'], [30, 460, 'down']], 0.5) +
+  heatmap(12, 560, 7, 15, 0.34) +
+  pipeline(304, 612, ['window(64)', 'model', 'threshold()'], 0.56, { bw: 92, bh: 22, gap: 12, size: 10 }) +
+  lossCurve(150, 640, 120, 60, 0.5) +
+  '</g>';
+
+// Home page band on phones: equity curve over the pipeline chain, 358 x 118
+export const heroBand =
+  lineChart(8, 58, 342, 34, 2.6, 0.6) +
+  pipeline(8, 88, ['load()', 'renko()', 'model', 'signal'], 0.55, { bw: 72, bh: 22, gap: 18, horizontal: true, size: 10 });

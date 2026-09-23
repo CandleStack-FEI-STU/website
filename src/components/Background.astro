@@ -1,10 +1,11 @@
 ---
-import { bottom, left, right } from '../lib/decor';
+import { bottom, left, mobile, right } from '../lib/decor';
 ---
 
 <div class="decor" aria-hidden="true">
   <svg class="left" viewBox="0 0 300 1000" set:html={left} />
   <svg class="right" viewBox="0 0 290 900" set:html={right} />
+  <svg class="mobile" viewBox="0 0 390 844" preserveAspectRatio="xMidYMid meet" set:html={mobile} />
   <svg class="bottom" viewBox="0 0 1280 160" preserveAspectRatio="xMidYMax slice" set:html={bottom} />
 </div>
 
@@ -51,6 +52,10 @@ import { bottom, left, right } from '../lib/decor';
     height: auto;
   }
 
+  .mobile {
+    display: none;
+  }
+
   .bottom {
     left: 0;
     bottom: 0;
@@ -82,9 +87,27 @@ import { bottom, left, right } from '../lib/decor';
     fill: var(--bg);
   }
 
+  /* Phones and tablets: one full-screen layout instead of the side columns. It sits behind the
+     text, so it is blurred (inside the SVG) and dimmed here to stay a quiet texture. */
   @media (max-width: 1100px) {
     .left,
     .right {
+      display: none;
+    }
+
+    .mobile {
+      display: block;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.4;
+    }
+
+    .bottom {
+      opacity: 0.45;
+    }
+
+    .decor::after {
       display: none;
     }
   }
