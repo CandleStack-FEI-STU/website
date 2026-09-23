@@ -7,6 +7,18 @@ import { getMeetings } from '../../lib/meetings';
 import { url } from '../../lib/url';
 
 const [site, { members: team }, meetings] = await Promise.all([getSite(), getTeam(), getMeetings()]);
+
+// "5/5 present · 2 decisions · 3 action items", empty counts left out
+function stats(m: { present: string[]; decisions: string[]; actions: unknown[] }) {
+  const plural = (n: number, word: string) => `${n} ${word}${n === 1 ? '' : 's'}`;
+  return [
+    `${m.present.length}/${team.length} present`,
+    m.decisions.length > 0 && plural(m.decisions.length, 'decision'),
+    m.actions.length > 0 && plural(m.actions.length, 'action item'),
+  ]
+    .filter(Boolean)
+    .join(' · ');
+}
 ---
 
 <Base title="Meetings">
@@ -32,10 +44,7 @@ const [site, { members: team }, meetings] = await Promise.all([getSite(), getTea
                   {m.data.draft && <span class="mono draft">draft</span>}
                 </span>
                 <span class="muted summary">{m.data.summary}</span>
-                <span class="mono muted stats">
-                  {m.data.present.length}/{team.length} present · {m.data.decisions.length} decisions ·{' '}
-                  {m.data.actions.length} action items
-                </span>
+                <span class="mono muted stats">{stats(m.data)}</span>
               </span>
             </a>
           </li>
