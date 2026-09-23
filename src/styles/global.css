@@ -117,7 +117,7 @@ a:hover {
 
 .row {
   display: grid;
-  grid-template-columns: 150px minmax(0, 1fr);
+  grid-template-columns: 200px minmax(0, 1fr);
   gap: 16px;
   padding: 10px 0;
   border-top: 1px solid var(--rule);

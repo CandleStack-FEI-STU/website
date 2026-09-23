@@ -1,9 +1,11 @@
 ---
 import SectionHeading from '../components/SectionHeading.astro';
 import Base from '../layouts/Base.astro';
-import { status } from '../data/site';
+import { getStatus } from '../lib/content';
+import { formatDate } from '../lib/format';
 
-const current = status.phases.find((p) => p.state === 'active');
+const status = await getStatus();
+
 const lists = [
   { title: 'Done', items: status.done, cls: 'state-done' },
   { title: 'In progress', items: status.inProgress, cls: 'state-active' },
@@ -14,7 +16,6 @@ const lists = [
 <Base title="Status">
   <section class="title">
     <h1>Status</h1>
-    <p>{current && `Current phase: ${current.name}. `}Last updated {status.updated}.</p>
   </section>
 
   <section>
@@ -47,9 +48,16 @@ const lists = [
       </section>
     ))
   }
+
+  <p class="mono muted updated">Last updated {formatDate(status.updated)}</p>
 </Base>
 
 <style>
+  .updated {
+    margin: 0;
+    font-size: 12px;
+  }
+
   .phase {
     display: grid;
     grid-template-columns: 24px 126px minmax(0, 1fr);

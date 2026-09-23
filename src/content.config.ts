@@ -2,9 +2,11 @@ import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 
-// One Markdown file per meeting in src/content/meetings. Files starting with "_" are ignored.
+// All texts live in the top-level content/ folder, see content/README.md.
+// The schemas below validate them at build time.
+
 const meetings = defineCollection({
-  loader: glob({ pattern: '**/[^_]*.md', base: './src/content/meetings' }),
+  loader: glob({ pattern: '*.md', base: './content/meetings' }),
   schema: z.object({
     week: z.number().int().positive(),
     date: z.coerce.date(),
@@ -25,4 +27,47 @@ const meetings = defineCollection({
   }),
 });
 
-export const collections = { meetings };
+const site = defineCollection({
+  loader: glob({ pattern: 'site.md', base: './content' }),
+  schema: z.object({
+    name: z.string(),
+    title: z.string(),
+    tagline: z.string(),
+    subtitle: z.string(),
+    github: z.url(),
+    meetingsIntro: z.string(),
+  }),
+});
+
+const status = defineCollection({
+  loader: glob({ pattern: 'status.md', base: './content' }),
+  schema: z.object({
+    updated: z.coerce.date(),
+    phases: z.array(
+      z.object({
+        name: z.string(),
+        description: z.string(),
+        state: z.enum(['done', 'active', 'planned']),
+      }),
+    ),
+    done: z.array(z.string()).default([]),
+    inProgress: z.array(z.string()).default([]),
+    planned: z.array(z.string()).default([]),
+  }),
+});
+
+const team = defineCollection({
+  loader: glob({ pattern: 'team.md', base: './content' }),
+  schema: z.object({
+    supervisor: z.object({ name: z.string(), affiliation: z.string() }),
+    members: z.array(
+      z.object({
+        name: z.string(),
+        role: z.string(),
+        area: z.string().optional(),
+      }),
+    ),
+  }),
+});
+
+export const collections = { meetings, site, status, team };

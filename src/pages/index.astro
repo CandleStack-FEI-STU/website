@@ -1,11 +1,12 @@
 ---
 import SectionHeading from '../components/SectionHeading.astro';
 import Base from '../layouts/Base.astro';
-import { project, status, team } from '../data/site';
+import { getSite, getStatus, getTeam } from '../lib/content';
 import { formatDate } from '../lib/format';
 import { getMeetings } from '../lib/meetings';
 import { url } from '../lib/url';
 
+const [project, status, { members: team }] = await Promise.all([getSite(), getStatus(), getTeam()]);
 const meetings = (await getMeetings()).slice(0, 3);
 const summary = [
   ...status.done.slice(-2).map((text) => ({ label: 'Done', cls: 'state-done', text })),
@@ -18,11 +19,11 @@ const summary = [
   <section class="title">
     <h1>{project.title}</h1>
     <p>{project.tagline}</p>
-    <span class="mono muted meta">{project.meta}</span>
+    <span class="mono muted meta">{project.subtitle}</span>
   </section>
 
   <section>
-    <SectionHeading title={`Status · ${status.updated}`} link={{ label: 'Full status', href: url('/status/') }} />
+    <SectionHeading title={`Status · ${formatDate(status.updated)}`} link={{ label: 'Full status', href: url('/status/') }} />
     <ul class="list">
       {
         summary.map((item) => (

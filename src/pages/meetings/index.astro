@@ -1,18 +1,18 @@
 ---
 import SectionHeading from '../../components/SectionHeading.astro';
 import Base from '../../layouts/Base.astro';
-import { team } from '../../data/site';
+import { getSite, getTeam } from '../../lib/content';
 import { formatDate } from '../../lib/format';
 import { getMeetings } from '../../lib/meetings';
 import { url } from '../../lib/url';
 
-const meetings = await getMeetings();
+const [site, { members: team }, meetings] = await Promise.all([getSite(), getTeam(), getMeetings()]);
 ---
 
 <Base title="Meetings">
   <section class="title">
     <h1>Meetings</h1>
-    <p>Minutes of weekly team meetings: attendance, decisions and action items.</p>
+    <p>{site.meetingsIntro}</p>
   </section>
 
   <section>
