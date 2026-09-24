@@ -7,7 +7,12 @@ permissions:
   contents: read
 
 jobs:
+  # Always the first job: no AI attribution in commits or the pull request.
+  no-ai-signs:
+    uses: CandleStack-FEI-STU/.github/.github/workflows/no-ai-signs.yml@main
+
   check:
+    needs: no-ai-signs
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
