@@ -15,7 +15,13 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  no-ai-signs:
+    uses: CandleStack-FEI-STU/.github/.github/workflows/no-ai-signs.yml@main
+    permissions:
+      contents: read
+
   build:
+    needs: no-ai-signs
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
