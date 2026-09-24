@@ -1,6 +1,7 @@
 import { getEntry } from 'astro:content';
 
-// Each of these collections holds exactly one file: content/site.md, content/status.md, content/team.md.
+// Each of these collections holds exactly one file: content/site.md, content/status.md, content/team.md,
+// content/links.md.
 
 export async function getSite() {
   const entry = await getEntry('site', 'site');
@@ -17,5 +18,11 @@ export async function getStatus() {
 export async function getTeam() {
   const entry = await getEntry('team', 'team');
   if (!entry) throw new Error('content/team.md is missing');
+  return entry.data;
+}
+
+export async function getLinks() {
+  const entry = await getEntry('links', 'links');
+  if (!entry) throw new Error('content/links.md is missing');
   return entry.data;
 }

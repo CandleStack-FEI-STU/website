@@ -7,6 +7,7 @@ All texts of the website live in this folder. No code needs to change to update 
 | `site.md` | project name, headline, subtitle, GitHub link, intro of the Meetings page |
 | `status.md` | Status page and the status block on the home page |
 | `team.md` | Team page and the team block on the home page |
+| `links.md` | Links section at the bottom of the home page |
 | `meetings/` | one file per meeting, named by date: `2026-09-23.md` |
 | `templates/meeting.md` | template for new meeting minutes |
 

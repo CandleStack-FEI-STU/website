@@ -1,13 +1,15 @@
 ---
 import HeroBand from '../components/HeroBand.astro';
+import LockIcon from '../components/LockIcon.astro';
 import SectionHeading from '../components/SectionHeading.astro';
 import Base from '../layouts/Base.astro';
-import { getSite, getStatus, getTeam } from '../lib/content';
+import { getLinks, getSite, getStatus, getTeam } from '../lib/content';
 import { formatDate } from '../lib/format';
 import { getMeetings } from '../lib/meetings';
 import { url } from '../lib/url';
 
-const [project, status, { members: team }] = await Promise.all([getSite(), getStatus(), getTeam()]);
+const [project, status, { members: team }, links] = await Promise.all([getSite(), getStatus(), getTeam(), getLinks()]);
+const hasTeamLinks = links.groups.some((group) => group.links.some((link) => link.team));
 const meetings = (await getMeetings()).slice(0, 3);
 const summary = [
   ...status.done.slice(-2).map((text) => ({ label: 'Done', cls: 'state-done', text })),
@@ -69,10 +71,109 @@ const summary = [
       }
     </ul>
   </section>
+
+  <section>
+    <SectionHeading title={links.title} />
+    <div class="groups">
+      {
+        links.groups.map((group) => (
+          <div>
+            <span class="mono muted group-name">{group.name}</span>
+            <ul class="list links">
+              {group.links.map((link) => (
+                <li>
+                  <a class="link" href={link.url}>
+                    <span class="link-name">
+                      {link.name}
+                      {link.team && <LockIcon />}
+                    </span>
+                    <span class="mono muted link-detail">{link.detail}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+    {
+      hasTeamLinks && (
+        <p class="mono muted team-note">
+          <LockIcon />
+          {links.teamNote}
+        </p>
+      )
+    }
+  </section>
 </Base>
 
 <style>
   .meta {
     font-size: 12px;
+  }
+
+  .groups {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: 24px;
+  }
+
+  .group-name {
+    display: block;
+    padding-bottom: 8px;
+    font-size: 12px;
+  }
+
+  .links {
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .link {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    padding: 10px 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .link-name {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .link:hover .link-name {
+    color: var(--accent);
+  }
+
+  .link-detail {
+    font-size: 12px;
+    overflow-wrap: anywhere;
+  }
+
+  .team-note {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 14px 0 0;
+    font-size: 12px;
+  }
+
+  /* Phones: groups stack, two links per line. */
+  @media (max-width: 560px) {
+    .groups {
+      grid-template-columns: minmax(0, 1fr);
+      row-gap: 24px;
+    }
+
+    .links {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: 16px;
+    }
+
+    .link-detail {
+      font-size: 11px;
+    }
   }
 </style>
