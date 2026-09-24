@@ -70,4 +70,25 @@ const team = defineCollection({
   }),
 });
 
-export const collections = { meetings, site, status, team };
+const links = defineCollection({
+  loader: glob({ pattern: 'links.md', base: './content' }),
+  schema: z.object({
+    title: z.string(),
+    teamNote: z.string(),
+    groups: z.array(
+      z.object({
+        name: z.string(),
+        links: z.array(
+          z.object({
+            name: z.string(),
+            detail: z.string(),
+            url: z.url(),
+            team: z.boolean().default(false),
+          }),
+        ),
+      }),
+    ),
+  }),
+});
+
+export const collections = { meetings, site, status, team, links };
