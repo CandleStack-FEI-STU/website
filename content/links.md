@@ -44,4 +44,7 @@ groups:
       - name: design
         detail: Mockups and brand
         url: https://github.com/CandleStack-FEI-STU/design
+      - name: ops
+        detail: Status page and checks
+        url: https://github.com/CandleStack-FEI-STU/ops
 ---
