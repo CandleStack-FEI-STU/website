@@ -1,0 +1,5 @@
+# Commits that only reformat the code, skipped by git blame (GitHub reads this file too).
+# Locally: git config blame.ignoreRevsFile .git-blame-ignore-revs
+
+# Format the code with Prettier (#32)
+6df87f33eba8091842a794dfc2f4204da2f620a2
