@@ -23,6 +23,7 @@ Static project website for CandleStack (STU FEI team project), built with Astro 
 
 ```bash
 npm run check   # must report 0 errors and 0 warnings
+npm run lint    # oxlint, Prettier and knip; `npm run format` fixes the formatting
 npm run build
 ```
 
