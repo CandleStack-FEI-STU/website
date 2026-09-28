@@ -1,0 +1,10 @@
+# typos (pre-commit): words it would "fix" that are right here.
+[default]
+extend-ignore-re = [
+  # Unicode ranges of the font subsets (U+0100-02BA, ...).
+  "U\\+[0-9A-Fa-f]{4,6}(-[0-9A-Fa-f]{4,6})?",
+]
+
+[default.extend-identifiers]
+# oxlint's max-lines-per-function option: immediately invoked function expressions.
+IIFEs = "IIFEs"

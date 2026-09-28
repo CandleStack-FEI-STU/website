@@ -1,3 +1,4 @@
-# A change to the workflows (checks and the Pages deploy) needs the tech lead's approval to
-# merge; the site itself does not.
+# A change to the workflows (checks and the Pages deploy) or the git hooks needs the tech
+# lead's approval to merge; the site itself does not.
 /.github/  @ArsenLabovich
+/.pre-commit-config.yaml  @ArsenLabovich
