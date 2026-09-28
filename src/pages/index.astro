@@ -28,82 +28,79 @@ const summary = [
   </section>
 
   <section>
-    <SectionHeading title={`Status · ${formatDate(status.updated)}`} link={{ label: 'Full status', href: url('/status/') }} />
+    <SectionHeading
+      title={`Status · ${formatDate(status.updated)}`}
+      link={{ label: 'Full status', href: url('/status/') }}
+    />
     <ul class="list">
-      {
-        summary.map((item) => (
-          <li class="row">
-            <span class:list={['mono', item.cls]}>{item.label}</span>
-            <span>{item.text}</span>
-          </li>
-        ))
-      }
+      {summary.map((item) => (
+        <li class="row">
+          <span class:list={['mono', item.cls]}>{item.label}</span>
+          <span>{item.text}</span>
+        </li>
+      ))}
     </ul>
   </section>
 
   <section>
     <SectionHeading title="Meetings" link={{ label: 'All meetings', href: url('/meetings/') }} />
     <ul class="list">
-      {
-        meetings.map((m) => (
-          <li>
-            <a class="row" href={url(`/meetings/${m.id}/`)}>
-              <span class="mono muted">{formatDate(m.data.date)}</span>
-              <span>{m.data.title}</span>
-            </a>
-          </li>
-        ))
-      }
-      {meetings.length === 0 && <li class="row"><span class="muted">No meetings yet</span></li>}
+      {meetings.map((m) => (
+        <li>
+          <a class="row" href={url(`/meetings/${m.id}/`)}>
+            <span class="mono muted">{formatDate(m.data.date)}</span>
+            <span>{m.data.title}</span>
+          </a>
+        </li>
+      ))}
+      {meetings.length === 0 && (
+        <li class="row">
+          <span class="muted">No meetings yet</span>
+        </li>
+      )}
     </ul>
   </section>
 
   <section>
     <SectionHeading title="Team" link={{ label: 'Team', href: url('/team/') }} />
     <ul class="list">
-      {
-        team.map((p) => (
-          <li class="row">
-            <span>{p.name}</span>
-            <span class="muted">{p.role}</span>
-          </li>
-        ))
-      }
+      {team.map((p) => (
+        <li class="row">
+          <span>{p.name}</span>
+          <span class="muted">{p.role}</span>
+        </li>
+      ))}
     </ul>
   </section>
 
   <section>
     <SectionHeading title={links.title} />
     <div class="groups">
-      {
-        links.groups.map((group) => (
-          <div>
-            <span class="mono muted group-name">{group.name}</span>
-            <ul class="list links">
-              {group.links.map((link) => (
-                <li>
-                  <a class="link" href={link.url}>
-                    <span class="link-name">
-                      {link.name}
-                      {link.team && <LockIcon />}
-                    </span>
-                    <span class="mono muted link-detail">{link.detail}</span>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))
-      }
+      {links.groups.map((group) => (
+        <div>
+          <span class="mono muted group-name">{group.name}</span>
+          <ul class="list links">
+            {group.links.map((link) => (
+              <li>
+                <a class="link" href={link.url}>
+                  <span class="link-name">
+                    {link.name}
+                    {link.team && <LockIcon />}
+                  </span>
+                  <span class="mono muted link-detail">{link.detail}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
     </div>
-    {
-      hasTeamLinks && (
-        <p class="mono muted team-note">
-          <LockIcon />
-          {links.teamNote}
-        </p>
-      )
-    }
+    {hasTeamLinks && (
+      <p class="mono muted team-note">
+        <LockIcon />
+        {links.teamNote}
+      </p>
+    )}
   </section>
 </Base>
 

@@ -17,22 +17,20 @@ const [site, problems] = await Promise.all([getSite(), getProblems()]);
   <section>
     <SectionHeading title="By status" />
     <ul class="list">
-      {
-        problems.map((p) => (
-          <li>
-            <a class="row entry" href={url(`/problems/${p.id}/`)}>
-              <span class="mono muted when">
-                <span>{p.data.status}</span>
-                <span>{p.id}</span>
-              </span>
-              <span class="body">
-                <span class="name">{p.data.title}</span>
-                <span class="muted summary">{p.data.summary}</span>
-              </span>
-            </a>
-          </li>
-        ))
-      }
+      {problems.map((p) => (
+        <li>
+          <a class="row entry" href={url(`/problems/${p.id}/`)}>
+            <span class="mono muted when">
+              <span>{p.data.status}</span>
+              <span>{p.id}</span>
+            </span>
+            <span class="body">
+              <span class="name">{p.data.title}</span>
+              <span class="muted summary">{p.data.summary}</span>
+            </span>
+          </a>
+        </li>
+      ))}
     </ul>
   </section>
 </Base>

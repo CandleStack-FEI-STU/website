@@ -49,15 +49,15 @@ const nav = [
     <Background />
     <div class="page">
       <header class="header">
-        <a href={url('/')} class="brand">{project.name}</a>
+        <a href={url('/')} class="brand">
+          {project.name}
+        </a>
         <nav class="nav">
-          {
-            nav.map((item) => (
-              <a href={url(item.href)} class:list={{ active: path.startsWith(item.href) }}>
-                {item.label}
-              </a>
-            ))
-          }
+          {nav.map((item) => (
+            <a href={url(item.href)} class:list={{ active: path.startsWith(item.href) }}>
+              {item.label}
+            </a>
+          ))}
           <a href={project.github}>GitHub</a>
           <ThemeToggle />
         </nav>

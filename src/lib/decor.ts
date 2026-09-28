@@ -33,10 +33,14 @@ function candles(x0: number, y0: number, w: number, n: number, amp: number, op: 
     const y = (v: number) => y0 - v * amp;
     const x = x0 + i * cw + cw / 2;
     const cls = c >= o ? 'up' : 'down';
-    out.push(`<line class="s-${cls}" x1="${f(x)}" y1="${f(y(hi))}" x2="${f(x)}" y2="${f(y(lo))}" stroke-opacity="${op}"/>`);
+    out.push(
+      `<line class="s-${cls}" x1="${f(x)}" y1="${f(y(hi))}" x2="${f(x)}" y2="${f(y(lo))}" stroke-opacity="${op}"/>`,
+    );
     const top = y(Math.max(o, c));
     const h = Math.max(2, Math.abs(y(o) - y(c)));
-    out.push(`<rect class="f-${cls}" x="${f(x - cw * 0.3)}" y="${f(top)}" width="${f(cw * 0.6)}" height="${f(h)}" fill-opacity="${op * 0.8}"/>`);
+    out.push(
+      `<rect class="f-${cls}" x="${f(x - cw * 0.3)}" y="${f(top)}" width="${f(cw * 0.6)}" height="${f(h)}" fill-opacity="${op * 0.8}"/>`,
+    );
   }
   return out.join('');
 }
@@ -47,7 +51,9 @@ function volume(x0: number, y0: number, n: number, w: number, op: number) {
   for (let i = 0; i < n; i++) {
     const h = Math.abs(gauss(18, 12)) + 4;
     const cls = rand() > 0.45 ? 'up' : 'down';
-    out.push(`<rect class="f-${cls}" x="${f(x0 + i * bw)}" y="${f(y0 - h)}" width="${f(bw * 0.7)}" height="${f(h)}" fill-opacity="${op}"/>`);
+    out.push(
+      `<rect class="f-${cls}" x="${f(x0 + i * bw)}" y="${f(y0 - h)}" width="${f(bw * 0.7)}" height="${f(h)}" fill-opacity="${op}"/>`,
+    );
   }
   return out.join('');
 }
@@ -82,13 +88,17 @@ function neural(x0: number, y0: number, layers: number[], dx: number, dy: number
   for (let l = 0; l < pos.length - 1; l++) {
     for (const [x1, y1] of pos[l]) {
       for (const [x2, y2] of pos[l + 1]) {
-        out.push(`<line class="s" x1="${x1}" y1="${f(y1)}" x2="${x2}" y2="${f(y2)}" stroke-opacity="${op * 0.45}" stroke-width="0.8"/>`);
+        out.push(
+          `<line class="s" x1="${x1}" y1="${f(y1)}" x2="${x2}" y2="${f(y2)}" stroke-opacity="${op * 0.45}" stroke-width="0.8"/>`,
+        );
       }
     }
   }
   for (const layer of pos) {
     for (const [x, y] of layer) {
-      out.push(`<circle class="s f-bg" cx="${x}" cy="${f(y)}" r="${r}" stroke-opacity="${op * 1.4}" stroke-width="1.2"/>`);
+      out.push(
+        `<circle class="s f-bg" cx="${x}" cy="${f(y)}" r="${r}" stroke-opacity="${op * 1.4}" stroke-width="1.2"/>`,
+      );
     }
   }
   return out.join('');
@@ -121,9 +131,13 @@ function clusters(centers: [number, number, string][], op: number) {
   const out: string[] = [];
   for (const [cx, cy, cls] of centers) {
     for (let i = 0; i < 24; i++) {
-      out.push(`<circle class="f-${cls}" cx="${f(cx + gauss(0, 18))}" cy="${f(cy + gauss(0, 18))}" r="2" fill-opacity="${op}"/>`);
+      out.push(
+        `<circle class="f-${cls}" cx="${f(cx + gauss(0, 18))}" cy="${f(cy + gauss(0, 18))}" r="2" fill-opacity="${op}"/>`,
+      );
     }
-    out.push(`<path class="s-${cls}" d="M${cx - 5} ${cy} h10 M${cx} ${cy - 5} v10" stroke-opacity="${op * 1.6}" stroke-width="1.4"/>`);
+    out.push(
+      `<path class="s-${cls}" d="M${cx - 5} ${cy} h10 M${cx} ${cy - 5} v10" stroke-opacity="${op * 1.6}" stroke-width="1.4"/>`,
+    );
   }
   return out.join('');
 }
@@ -133,7 +147,9 @@ function heatmap(x0: number, y0: number, n: number, cell: number, op: number) {
   for (let i = 0; i < n; i++) {
     for (let j = 0; j < n; j++) {
       const v = i === j ? 1 : Math.max(0, 1 - Math.abs(i - j) / n + (rand() * 0.35 - 0.25));
-      out.push(`<rect class="f-up" x="${x0 + j * cell}" y="${y0 + i * cell}" width="${cell - 2}" height="${cell - 2}" fill-opacity="${(op * v).toFixed(3)}"/>`);
+      out.push(
+        `<rect class="f-up" x="${x0 + j * cell}" y="${y0 + i * cell}" width="${cell - 2}" height="${cell - 2}" fill-opacity="${(op * v).toFixed(3)}"/>`,
+      );
     }
   }
   return out.join('');
@@ -156,7 +172,14 @@ function lossCurve(x0: number, y0: number, w: number, h: number, op: number) {
 export const left =
   lineChart(24, 150, 250, 40, 5, 0.32) +
   neural(60, 380, [3, 5, 5, 2], 64, 34, 0.22) +
-  clusters([[70, 610, 'up'], [160, 680, 'decor'], [80, 760, 'down']], 0.3) +
+  clusters(
+    [
+      [70, 610, 'up'],
+      [160, 680, 'decor'],
+      [80, 760, 'down'],
+    ],
+    0.3,
+  ) +
   heatmap(40, 860, 8, 18, 0.16);
 
 // Right column: 290 x 900
@@ -177,7 +200,14 @@ export const mobile =
   '<g filter="url(#soften)">' +
   neural(300, 44, [3, 4, 3], 26, 20, 0.5, 3.5) +
   neural(250, 330, [3, 4, 4, 2], 34, 26, 0.4) +
-  clusters([[34, 330, 'up'], [86, 400, 'decor'], [30, 460, 'down']], 0.5) +
+  clusters(
+    [
+      [34, 330, 'up'],
+      [86, 400, 'decor'],
+      [30, 460, 'down'],
+    ],
+    0.5,
+  ) +
   heatmap(12, 560, 7, 15, 0.34) +
   pipeline(304, 612, ['window(64)', 'model', 'threshold()'], 0.56, { bw: 92, bh: 22, gap: 12, size: 10 }) +
   lossCurve(150, 640, 120, 60, 0.5) +
@@ -186,4 +216,10 @@ export const mobile =
 // Home page band on phones: equity curve over the pipeline chain, 358 x 118
 export const heroBand =
   lineChart(8, 58, 342, 34, 2.6, 0.6) +
-  pipeline(8, 88, ['load()', 'renko()', 'model', 'signal'], 0.55, { bw: 72, bh: 22, gap: 18, horizontal: true, size: 10 });
+  pipeline(8, 88, ['load()', 'renko()', 'model', 'signal'], 0.55, {
+    bw: 72,
+    bh: 22,
+    gap: 18,
+    horizontal: true,
+    size: 10,
+  });
