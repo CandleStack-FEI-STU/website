@@ -22,6 +22,7 @@ Open http://localhost:4321. Pages reload on every change.
 | `npm run check` | type-checks the code and validates the content |
 | `npm run lint` | lints the code (oxlint), checks its formatting (Prettier) and finds unused files and exports (knip) |
 | `npm run format` | formats the code with Prettier |
+| `uvx pre-commit install` | once per clone: the git hooks (`.pre-commit-config.yaml`) fix whitespace and stop secrets, typos, Markdown and workflow findings on every commit; `uvx pre-commit run --all-files` runs them on every file, as CI's `Pre-commit` job does |
 
 ## Editing content
 
@@ -63,7 +64,7 @@ with the file and field named, so a mistake never reaches the live site.
 
 ## Project structure
 
-```
+```text
 content/                 texts: site, status, team, links, meetings, templates, problems
 public/                  static files (favicon)
 src/

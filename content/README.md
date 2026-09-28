@@ -32,6 +32,6 @@ members and headers of the response. Copy an existing file as a start. The page 
 ## Rules
 
 - Everything is inside the block between the two `---` lines, one `field: value` per line.
-- Lists start with `- `, nested fields are indented with two spaces.
+- List items start with `-` and a space, nested fields are indented with two spaces.
 - Put text with a colon in quotes: `'Project: goals and scope'`.
 - A mistake does not break the live site: the build fails and names the file and the field.

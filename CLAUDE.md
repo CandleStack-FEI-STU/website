@@ -21,6 +21,10 @@ Static project website for CandleStack (STU FEI team project), built with Astro 
 
 ## Verify
 
+The git hooks (`uvx pre-commit install`, once per clone) fix whitespace and stop secrets, typos,
+Markdown and workflow findings and AI attribution on every commit; CI's `Pre-commit` job runs
+them on every file, as `uvx pre-commit run --all-files` does. Before every push:
+
 ```bash
 npm run check   # must report 0 errors and 0 warnings
 npm run lint    # oxlint, Prettier and knip; `npm run format` fixes the formatting
