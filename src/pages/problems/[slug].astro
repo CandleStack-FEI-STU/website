@@ -1,0 +1,108 @@
+---
+import SectionHeading from '../../components/SectionHeading.astro';
+import Base from '../../layouts/Base.astro';
+import { getProblems, problemType, statusLine } from '../../lib/problems';
+import { url } from '../../lib/url';
+
+export async function getStaticPaths() {
+  const problems = await getProblems();
+  return problems.map((problem) => ({ params: { slug: problem.id }, props: { problem } }));
+}
+
+const { problem } = Astro.props;
+const p = problem.data;
+
+const details = [
+  { label: 'Status', value: statusLine(p.status), mono: false },
+  { label: 'Type', value: problemType(problem.id), mono: true },
+];
+---
+
+<Base title={p.title} description={p.summary}>
+  <a href={url('/problems/')} class="mono muted back">← All problem types</a>
+
+  <section class="title">
+    <h1>{p.title}</h1>
+    <p>{p.summary}</p>
+  </section>
+
+  <section>
+    <SectionHeading title="Details" />
+    <ul class="list">
+      {
+        details.map((d) => (
+          <li class="row">
+            <span class="muted">{d.label}</span>
+            <span class:list={['value', { mono: d.mono }]}>{d.value}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section>
+    <SectionHeading title="When it happens" />
+    <ul class="list">
+      {
+        p.when.map((item) => (
+          <li class="row single">
+            <span>{item}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section>
+    <SectionHeading title="What to do" />
+    <ol class="list">
+      {
+        p.todo.map((item, i) => (
+          <li class="row numbered">
+            <span class="mono muted">{i + 1}</span>
+            <span>{item}</span>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  {
+    p.fields.length > 0 && (
+      <section>
+        <SectionHeading title="In the response" />
+        <ul class="list">
+          {p.fields.map((field) => (
+            <li class="row">
+              <span class="mono">{field.name}</span>
+              <span>{field.description}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+</Base>
+
+<style>
+  .back {
+    font-size: 12px;
+    margin-bottom: -28px;
+  }
+
+  .value {
+    overflow-wrap: anywhere;
+  }
+
+  .single {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  @media (max-width: 560px) {
+    /* Keep short numbers next to their text instead of on a line of their own */
+    .numbered {
+      grid-template-columns: 32px minmax(0, 1fr);
+      gap: 8px;
+    }
+  }
+</style>
