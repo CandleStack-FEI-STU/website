@@ -24,17 +24,15 @@ const { supervisor, members: team } = await getTeam();
   <section>
     <SectionHeading title="Members" />
     <ul class="list">
-      {
-        team.map((p) => (
-          <li class="row member">
-            <span class="name">{p.name}</span>
-            <span class="stack">
-              <span>{p.role}</span>
-              {p.area && <span class="muted area">{p.area}</span>}
-            </span>
-          </li>
-        ))
-      }
+      {team.map((p) => (
+        <li class="row member">
+          <span class="name">{p.name}</span>
+          <span class="stack">
+            <span>{p.role}</span>
+            {p.area && <span class="muted area">{p.area}</span>}
+          </span>
+        </li>
+      ))}
     </ul>
   </section>
 </Base>

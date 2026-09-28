@@ -30,33 +30,29 @@ function stats(m: { present: string[]; decisions: string[]; actions: unknown[] }
   <section>
     <SectionHeading title="Newest first" />
     <ul class="list">
-      {
-        meetings.map((m) => (
-          <li>
-            <a class="row entry" href={url(`/meetings/${m.id}/`)}>
-              <span class="mono muted when">
-                <span>{formatDate(m.data.date)}</span>
-                <span>Week {m.data.week}</span>
+      {meetings.map((m) => (
+        <li>
+          <a class="row entry" href={url(`/meetings/${m.id}/`)}>
+            <span class="mono muted when">
+              <span>{formatDate(m.data.date)}</span>
+              <span>Week {m.data.week}</span>
+            </span>
+            <span class="body">
+              <span class="name">
+                {m.data.title}
+                {m.data.draft && <span class="mono draft">draft</span>}
               </span>
-              <span class="body">
-                <span class="name">
-                  {m.data.title}
-                  {m.data.draft && <span class="mono draft">draft</span>}
-                </span>
-                <span class="muted summary">{m.data.summary}</span>
-                <span class="mono muted stats">{stats(m.data)}</span>
-              </span>
-            </a>
-          </li>
-        ))
-      }
-      {
-        meetings.length === 0 && (
-          <li class="row">
-            <span class="muted">No meetings yet</span>
-          </li>
-        )
-      }
+              <span class="muted summary">{m.data.summary}</span>
+              <span class="mono muted stats">{stats(m.data)}</span>
+            </span>
+          </a>
+        </li>
+      ))}
+      {meetings.length === 0 && (
+        <li class="row">
+          <span class="muted">No meetings yet</span>
+        </li>
+      )}
     </ul>
   </section>
 </Base>

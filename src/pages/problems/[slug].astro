@@ -19,7 +19,9 @@ const details = [
 ---
 
 <Base title={p.title} description={p.summary}>
-  <a href={url('/problems/')} class="mono muted back">← All problem types</a>
+  <a href={url('/problems/')} class="mono muted back">
+    ← All problem types
+  </a>
 
   <section class="title">
     <h1>{p.title}</h1>
@@ -29,59 +31,51 @@ const details = [
   <section>
     <SectionHeading title="Details" />
     <ul class="list">
-      {
-        details.map((d) => (
-          <li class="row">
-            <span class="muted">{d.label}</span>
-            <span class:list={['value', { mono: d.mono }]}>{d.value}</span>
-          </li>
-        ))
-      }
+      {details.map((d) => (
+        <li class="row">
+          <span class="muted">{d.label}</span>
+          <span class:list={['value', { mono: d.mono }]}>{d.value}</span>
+        </li>
+      ))}
     </ul>
   </section>
 
   <section>
     <SectionHeading title="When it happens" />
     <ul class="list">
-      {
-        p.when.map((item) => (
-          <li class="row single">
-            <span>{item}</span>
-          </li>
-        ))
-      }
+      {p.when.map((item) => (
+        <li class="row single">
+          <span>{item}</span>
+        </li>
+      ))}
     </ul>
   </section>
 
   <section>
     <SectionHeading title="What to do" />
     <ol class="list">
-      {
-        p.todo.map((item, i) => (
-          <li class="row numbered">
-            <span class="mono muted">{i + 1}</span>
-            <span>{item}</span>
-          </li>
-        ))
-      }
+      {p.todo.map((item, i) => (
+        <li class="row numbered">
+          <span class="mono muted">{i + 1}</span>
+          <span>{item}</span>
+        </li>
+      ))}
     </ol>
   </section>
 
-  {
-    p.fields.length > 0 && (
-      <section>
-        <SectionHeading title="In the response" />
-        <ul class="list">
-          {p.fields.map((field) => (
-            <li class="row">
-              <span class="mono">{field.name}</span>
-              <span>{field.description}</span>
-            </li>
-          ))}
-        </ul>
-      </section>
-    )
-  }
+  {p.fields.length > 0 && (
+    <section>
+      <SectionHeading title="In the response" />
+      <ul class="list">
+        {p.fields.map((field) => (
+          <li class="row">
+            <span class="mono">{field.name}</span>
+            <span>{field.description}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
 </Base>
 
 <style>

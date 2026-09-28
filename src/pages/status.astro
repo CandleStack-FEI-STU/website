@@ -21,33 +21,29 @@ const lists = [
   <section>
     <SectionHeading title="Phases" />
     <ol class="list">
-      {
-        status.phases.map((p) => (
-          <li class:list={['phase', p.state]}>
-            <span class="dot" />
-            <span class="mono name">{p.name}</span>
-            <span class="desc">{p.description}</span>
-          </li>
-        ))
-      }
+      {status.phases.map((p) => (
+        <li class:list={['phase', p.state]}>
+          <span class="dot" />
+          <span class="mono name">{p.name}</span>
+          <span class="desc">{p.description}</span>
+        </li>
+      ))}
     </ol>
   </section>
 
-  {
-    lists.map((list) => (
-      <section>
-        <SectionHeading title={list.title} />
-        <ul class="list">
-          {list.items.map((item) => (
-            <li class="item">
-              <span class={list.cls}>—</span>
-              <span>{item}</span>
-            </li>
-          ))}
-        </ul>
-      </section>
-    ))
-  }
+  {lists.map((list) => (
+    <section>
+      <SectionHeading title={list.title} />
+      <ul class="list">
+        {list.items.map((item) => (
+          <li class="item">
+            <span class={list.cls}>—</span>
+            <span>{item}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+  ))}
 
   <p class="mono muted updated">Last updated {formatDate(status.updated)}</p>
 </Base>

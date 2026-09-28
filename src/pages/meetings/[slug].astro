@@ -26,92 +26,84 @@ const details = [
 ---
 
 <Base title={`Week ${m.week}: ${m.title}`} description={m.summary}>
-  <a href={url('/meetings/')} class="mono muted back">← All meetings</a>
+  <a href={url('/meetings/')} class="mono muted back">
+    ← All meetings
+  </a>
 
   <section class="title">
-    <h1>Week {m.week} · {m.title}</h1>
+    <h1>
+      Week {m.week} · {m.title}
+    </h1>
   </section>
 
   <section>
     <SectionHeading title="Details" />
     <ul class="list">
-      {
-        details.map(([label, value]) => (
-          <li class="row">
-            <span class="muted">{label}</span>
-            <span>{value}</span>
-          </li>
-        ))
-      }
+      {details.map(([label, value]) => (
+        <li class="row">
+          <span class="muted">{label}</span>
+          <span>{value}</span>
+        </li>
+      ))}
     </ul>
   </section>
 
   <section>
     <SectionHeading title="Agenda" />
     <ol class="list">
-      {
-        m.agenda.map((item, i) => (
-          <li class="row numbered">
-            <span class="mono muted">{i + 1}</span>
-            <span>{item}</span>
-          </li>
-        ))
-      }
+      {m.agenda.map((item, i) => (
+        <li class="row numbered">
+          <span class="mono muted">{i + 1}</span>
+          <span>{item}</span>
+        </li>
+      ))}
     </ol>
   </section>
 
-  {
-    m.decisions.length > 0 && (
-      <section>
-        <SectionHeading title="Decisions" />
-        <ul class="list">
-          {m.decisions.map((item, i) => (
-            <li class="row numbered">
-              <span class="mono state-done">D{i + 1}</span>
-              <span>{item}</span>
-            </li>
-          ))}
-        </ul>
-      </section>
-    )
-  }
+  {m.decisions.length > 0 && (
+    <section>
+      <SectionHeading title="Decisions" />
+      <ul class="list">
+        {m.decisions.map((item, i) => (
+          <li class="row numbered">
+            <span class="mono state-done">D{i + 1}</span>
+            <span>{item}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
 
-  {
-    m.actions.length > 0 && (
-      <section>
-        <SectionHeading title="Action items" />
-        <ul class="list">
-          {m.actions.map((a) => (
-            <li class="row action">
-              <span>{a.task}</span>
-              <span class="muted">{a.owner}</span>
-              <span class="mono state-active">{a.due ? formatDate(a.due).slice(0, 5) : '—'}</span>
-            </li>
-          ))}
-        </ul>
-      </section>
-    )
-  }
+  {m.actions.length > 0 && (
+    <section>
+      <SectionHeading title="Action items" />
+      <ul class="list">
+        {m.actions.map((a) => (
+          <li class="row action">
+            <span>{a.task}</span>
+            <span class="muted">{a.owner}</span>
+            <span class="mono state-active">{a.due ? formatDate(a.due).slice(0, 5) : '—'}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
 
-  {
-    hasNotes && (
-      <section>
-        <SectionHeading title="Notes" />
-        <div class="notes">
-          <Content />
-        </div>
-      </section>
-    )
-  }
+  {hasNotes && (
+    <section>
+      <SectionHeading title="Notes" />
+      <div class="notes">
+        <Content />
+      </div>
+    </section>
+  )}
 
-  {
-    m.next && (
-      <section>
-        <SectionHeading title="Next meeting" />
-        <p class="next">{m.next}</p>
-      </section>
-    )
-  }
+  {m.next && (
+    <section>
+      <SectionHeading title="Next meeting" />
+      <p class="next">{m.next}</p>
+    </section>
+  )}
 </Base>
 
 <style>

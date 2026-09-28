@@ -19,9 +19,7 @@ const meetings = defineCollection({
     notesBy: z.string().optional(),
     agenda: z.array(z.string()),
     decisions: z.array(z.string()).default([]),
-    actions: z
-      .array(z.object({ task: z.string(), owner: z.string(), due: z.coerce.date().optional() }))
-      .default([]),
+    actions: z.array(z.object({ task: z.string(), owner: z.string(), due: z.coerce.date().optional() })).default([]),
     next: z.string().optional(),
     draft: z.boolean().default(false),
   }),

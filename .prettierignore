@@ -1,0 +1,7 @@
+# Generated
+dist/
+.astro/
+package-lock.json
+
+# Prose, not code: Markdown keeps its hand-written tables, and content/ is edited by non-developers.
+*.md
