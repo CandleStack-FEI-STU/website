@@ -1,0 +1,6 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  // Loaded by path in astro.config.mjs (Fonts API), which knip cannot follow.
+  "ignoreDependencies": ["@fontsource-variable/.*"],
+  "ignoreExportsUsedInFile": true,
+}

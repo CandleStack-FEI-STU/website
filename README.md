@@ -20,6 +20,8 @@ Open http://localhost:4321. Pages reload on every change.
 | `npm run build` | builds the static site into `dist/` |
 | `npm run preview` | serves the built site |
 | `npm run check` | type-checks the code and validates the content |
+| `npm run lint` | lints the code (oxlint), checks its formatting (Prettier) and finds unused files and exports (knip) |
+| `npm run format` | formats the code with Prettier |
 
 ## Editing content
 

@@ -20,7 +20,16 @@ const gauss = (mu: number, sigma: number) => {
 };
 const f = (n: number) => n.toFixed(1);
 
-function candles(x0: number, y0: number, w: number, n: number, amp: number, op: number) {
+interface ChartArea {
+  x0: number;
+  y0: number;
+  w: number;
+  n: number;
+  amp: number;
+  op: number;
+}
+
+function candles({ x0, y0, w, n, amp, op }: ChartArea) {
   const out: string[] = [];
   const cw = w / n;
   let price = 0;
@@ -58,7 +67,7 @@ function volume(x0: number, y0: number, n: number, w: number, op: number) {
   return out.join('');
 }
 
-function lineChart(x0: number, y0: number, w: number, n: number, amp: number, op: number) {
+function lineChart({ x0, y0, w, n, amp, op }: ChartArea) {
   const pts: [number, number][] = [];
   let v = 0;
   for (let i = 0; i < n; i++) {
@@ -80,7 +89,17 @@ function lineChart(x0: number, y0: number, w: number, n: number, amp: number, op
   );
 }
 
-function neural(x0: number, y0: number, layers: number[], dx: number, dy: number, op: number, r = 5) {
+interface Network {
+  x0: number;
+  y0: number;
+  layers: number[];
+  dx: number;
+  dy: number;
+  op: number;
+  r?: number;
+}
+
+function neural({ x0, y0, layers, dx, dy, op, r = 5 }: Network) {
   const pos = layers.map((cnt, li) =>
     Array.from({ length: cnt }, (_, j) => [x0 + li * dx, y0 + (j - (cnt - 1) / 2) * dy] as const),
   );
@@ -170,8 +189,8 @@ function lossCurve(x0: number, y0: number, w: number, h: number, op: number) {
 
 // Left column: 300 x 1000
 export const left =
-  lineChart(24, 150, 250, 40, 5, 0.32) +
-  neural(60, 380, [3, 5, 5, 2], 64, 34, 0.22) +
+  lineChart({ x0: 24, y0: 150, w: 250, n: 40, amp: 5, op: 0.32 }) +
+  neural({ x0: 60, y0: 380, layers: [3, 5, 5, 2], dx: 64, dy: 34, op: 0.22 }) +
   clusters(
     [
       [70, 610, 'up'],
@@ -186,11 +205,11 @@ export const left =
 export const right =
   pipeline(50, 70, ['load()', 'renko()', 'window(64)', 'model.predict', 'threshold()'], 0.42) +
   lossCurve(20, 420, 240, 110, 0.3) +
-  candles(10, 720, 260, 26, 9, 0.28) +
+  candles({ x0: 10, y0: 720, w: 260, n: 26, amp: 9, op: 0.28 }) +
   volume(10, 820, 26, 260, 0.2);
 
 // Bottom band: 1280 x 160
-export const bottom = candles(0, 60, 1280, 72, 6, 0.22) + volume(0, 150, 72, 1280, 0.14);
+export const bottom = candles({ x0: 0, y0: 60, w: 1280, n: 72, amp: 6, op: 0.22 }) + volume(0, 150, 72, 1280, 0.14);
 
 // Phone layout (below 1100px), drawn for a 390 x 844 screen. It sits behind the text, so it is
 // blurred inside the SVG and dimmed in Background.astro. Generated after the desktop parts so
@@ -198,8 +217,8 @@ export const bottom = candles(0, 60, 1280, 72, 6, 0.22) + volume(0, 150, 72, 128
 export const mobile =
   '<defs><filter id="soften" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="1.2"/></filter></defs>' +
   '<g filter="url(#soften)">' +
-  neural(300, 44, [3, 4, 3], 26, 20, 0.5, 3.5) +
-  neural(250, 330, [3, 4, 4, 2], 34, 26, 0.4) +
+  neural({ x0: 300, y0: 44, layers: [3, 4, 3], dx: 26, dy: 20, op: 0.5, r: 3.5 }) +
+  neural({ x0: 250, y0: 330, layers: [3, 4, 4, 2], dx: 34, dy: 26, op: 0.4 }) +
   clusters(
     [
       [34, 330, 'up'],
@@ -215,7 +234,7 @@ export const mobile =
 
 // Home page band on phones: equity curve over the pipeline chain, 358 x 118
 export const heroBand =
-  lineChart(8, 58, 342, 34, 2.6, 0.6) +
+  lineChart({ x0: 8, y0: 58, w: 342, n: 34, amp: 2.6, op: 0.6 }) +
   pipeline(8, 88, ['load()', 'renko()', 'model', 'signal'], 0.55, {
     bw: 72,
     bh: 22,
