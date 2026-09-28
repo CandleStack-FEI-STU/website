@@ -17,6 +17,7 @@ Static project website for CandleStack (STU FEI team project), built with Astro 
 - Everything in English.
 - No AI attribution anywhere: no `Co-Authored-By` AI trailers or session links in commits,
   no "Generated with ..." lines in pull requests, no AI mentions in code or content.
+  The `no-ai-signs` check fails on them; `.claude/settings.json` already turns Claude Code's attribution off.
 
 ## Verify
 
