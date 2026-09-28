@@ -31,6 +31,7 @@ never the code. See [`content/README.md`](content/README.md) for the rules.
 | `content/site.md` | project name, headline, subtitle, GitHub link, intro of the Meetings page |
 | `content/status.md` | Status page and the status block on the home page |
 | `content/team.md` | Team page and the team block on the home page |
+| `content/links.md` | Links section at the bottom of the home page |
 | `content/meetings/YYYY-MM-DD.md` | one file per meeting |
 | `content/templates/meeting.md` | template for new meeting minutes |
 
@@ -53,13 +54,13 @@ with the file and field named, so a mistake never reaches the live site.
 ## Project structure
 
 ```
-content/                 texts: site, status, team, meetings, templates
+content/                 texts: site, status, team, links, meetings, templates
 public/                  static files (favicon)
 src/
   content.config.ts      schemas that validate everything in content/
   pages/                 one file per page; meetings/[slug].astro renders each meeting
   layouts/Base.astro     page shell: header, navigation, theme
-  components/            background, theme toggle, section heading
+  components/            background, hero band, theme toggle, section heading, lock icon
   lib/                   content loaders, date format, base-path links, background generator
   styles/global.css      colors for the light and dark theme, shared styles
 ```
