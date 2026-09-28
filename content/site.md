@@ -8,4 +8,7 @@ github: https://github.com/CandleStack-FEI-STU
 
 # Intro under the heading on the Meetings page.
 meetingsIntro: 'Minutes of weekly team meetings: attendance, decisions and action items.'
+
+# Intro under the heading on the Problem types page (/problems/).
+problemsIntro: 'Errors of the CandleStack API. Every error response is application/problem+json (RFC 9457); its type links to one of these pages.'
 ---

@@ -27,6 +27,20 @@ const meetings = defineCollection({
   }),
 });
 
+// Problem types of the CandleStack API (RFC 9457): the page of each is its `type` URI,
+// https://candlestack.tech/problems/<slug>, so the file name must be the slug the API sends.
+const problems = defineCollection({
+  loader: glob({ pattern: '*.md', base: './content/problems' }),
+  schema: z.object({
+    title: z.string(),
+    status: z.number().int().min(400).max(599),
+    summary: z.string(),
+    when: z.array(z.string()).min(1),
+    todo: z.array(z.string()).min(1),
+    fields: z.array(z.object({ name: z.string(), description: z.string() })).default([]),
+  }),
+});
+
 const site = defineCollection({
   loader: glob({ pattern: 'site.md', base: './content' }),
   schema: z.object({
@@ -36,6 +50,7 @@ const site = defineCollection({
     subtitle: z.string(),
     github: z.url(),
     meetingsIntro: z.string(),
+    problemsIntro: z.string(),
   }),
 });
 
@@ -91,4 +106,4 @@ const links = defineCollection({
   }),
 });
 
-export const collections = { meetings, site, status, team, links };
+export const collections = { meetings, problems, site, status, team, links };

@@ -28,12 +28,13 @@ never the code. See [`content/README.md`](content/README.md) for the rules.
 
 | File | What it controls |
 |---|---|
-| `content/site.md` | project name, headline, subtitle, GitHub link, intro of the Meetings page |
+| `content/site.md` | project name, headline, subtitle, GitHub link, intros of the Meetings and Problem types pages |
 | `content/status.md` | Status page and the status block on the home page |
 | `content/team.md` | Team page and the team block on the home page |
 | `content/links.md` | Links section at the bottom of the home page |
 | `content/meetings/YYYY-MM-DD.md` | one file per meeting |
 | `content/templates/meeting.md` | template for new meeting minutes |
+| `content/problems/<slug>.md` | one file per error type of the CandleStack API, see below |
 
 ### Add meeting minutes
 
@@ -43,6 +44,13 @@ never the code. See [`content/README.md`](content/README.md) for the rules.
 
 The meeting appears in the list and gets its own page at `/meetings/YYYY-MM-DD/`.
 With `draft: true` it is visible only in `npm run dev`.
+
+### Problem types of the API
+
+Error responses of the CandleStack API (RFC 9457) have a `type` of
+`https://candlestack.tech/problems/<slug>`. Each `content/problems/<slug>.md` becomes that page:
+the status, when the error happens and what the client should do. `/problems/` lists them all.
+See [`content/README.md`](content/README.md) to add one.
 
 ### Update status or team
 
@@ -54,11 +62,12 @@ with the file and field named, so a mistake never reaches the live site.
 ## Project structure
 
 ```
-content/                 texts: site, status, team, links, meetings, templates
+content/                 texts: site, status, team, links, meetings, templates, problems
 public/                  static files (favicon)
 src/
   content.config.ts      schemas that validate everything in content/
-  pages/                 one file per page; meetings/[slug].astro renders each meeting
+  pages/                 one file per page; meetings/[slug].astro and problems/[slug].astro
+                         render each meeting and problem type
   layouts/Base.astro     page shell: header, navigation, theme
   components/            background, hero band, theme toggle, section heading, lock icon
   lib/                   content loaders, date format, base-path links, background generator

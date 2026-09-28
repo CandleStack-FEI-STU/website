@@ -1,0 +1,65 @@
+---
+import SectionHeading from '../../components/SectionHeading.astro';
+import Base from '../../layouts/Base.astro';
+import { getSite } from '../../lib/content';
+import { getProblems } from '../../lib/problems';
+import { url } from '../../lib/url';
+
+const [site, problems] = await Promise.all([getSite(), getProblems()]);
+---
+
+<Base title="Problem types" description={site.problemsIntro}>
+  <section class="title">
+    <h1>Problem types</h1>
+    <p>{site.problemsIntro}</p>
+  </section>
+
+  <section>
+    <SectionHeading title="By status" />
+    <ul class="list">
+      {
+        problems.map((p) => (
+          <li>
+            <a class="row entry" href={url(`/problems/${p.id}/`)}>
+              <span class="mono muted when">
+                <span>{p.data.status}</span>
+                <span>{p.id}</span>
+              </span>
+              <span class="body">
+                <span class="name">{p.data.title}</span>
+                <span class="muted summary">{p.data.summary}</span>
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</Base>
+
+<style>
+  .entry {
+    padding: 18px 0;
+  }
+
+  .when,
+  .body {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .body {
+    gap: 6px;
+  }
+
+  .name {
+    font-size: 18px;
+    font-weight: 500;
+  }
+
+  .summary {
+    font-size: 15px;
+    line-height: 1.55;
+  }
+</style>
