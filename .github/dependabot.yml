@@ -10,6 +10,10 @@ updates:
       npm:
         patterns: ["*"]
         update-types: [minor, patch]
+    ignore:
+      # astro check (@astrojs/check) does not support TypeScript 7; drop this once it does.
+      - dependency-name: typescript
+        update-types: ["version-update:semver-major"]
 
   # The workflows' actions, pinned to commit SHAs.
   - package-ecosystem: github-actions
