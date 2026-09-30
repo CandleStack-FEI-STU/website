@@ -6,13 +6,13 @@ supervisor:
 # Team members in display order. area is optional.
 members:
   - name: Arsen Labovich
-    role: To be assigned
+    role: Tech Lead
   - name: Mykhailo Adamenko
-    role: To be assigned
+    role: Full-stack Developer
   - name: Vladyslav Shudiehov
-    role: To be assigned
+    role: ML & Quant Researcher
   - name: Bohdan Lynnyk
-    role: To be assigned
+    role: Frontend Developer
   - name: Tymur Tkach
-    role: To be assigned
+    role: Full-stack Developer
 ---
