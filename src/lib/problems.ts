@@ -9,6 +9,8 @@ export async function getProblems() {
 // Reason phrases of the statuses the API answers with (RFC 9110, RFC 6585).
 const REASONS: Record<number, string> = {
   400: 'Bad Request',
+  401: 'Unauthorized',
+  403: 'Forbidden',
   404: 'Not Found',
   405: 'Method Not Allowed',
   422: 'Unprocessable Content',
