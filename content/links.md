@@ -28,23 +28,23 @@ groups:
     links:
       - name: Project board
         detail: Tasks and sprints
-        url: https://github.com/orgs/CandleStack-FEI-STU/projects/1
+        url: https://github.com/orgs/candlestack-tech/projects/1
         team: true
       - name: GitHub
         detail: Organization
-        url: https://github.com/CandleStack-FEI-STU
+        url: https://github.com/candlestack-tech
   - name: Code
     links:
       - name: candlestack
         detail: App and infrastructure
-        url: https://github.com/CandleStack-FEI-STU/candlestack
+        url: https://github.com/candlestack-tech/candlestack
       - name: website
         detail: This site
-        url: https://github.com/CandleStack-FEI-STU/website
+        url: https://github.com/candlestack-tech/website
       - name: design
         detail: Mockups and brand
-        url: https://github.com/CandleStack-FEI-STU/design
+        url: https://github.com/candlestack-tech/design
       - name: ops
         detail: Status page and checks
-        url: https://github.com/CandleStack-FEI-STU/ops
+        url: https://github.com/candlestack-tech/ops
 ---
